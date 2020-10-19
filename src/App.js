@@ -82,18 +82,18 @@ function ChatRoom() {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             uid,
             photoURL
-        })
+        });
 
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    };
 
     return (<>
         <main>
 
             {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
 
-            <span ref={dummy}></span>
+            <span ref={dummy}/>
 
         </main>
 
@@ -115,7 +115,7 @@ function ChatMessage(props) {
 
     return (<>
         <div className={`message ${messageClass}`}>
-            <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
+            <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'}  alt={"profile"}/>
             <p>{text}</p>
         </div>
     </>)
