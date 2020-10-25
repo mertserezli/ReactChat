@@ -33,7 +33,7 @@ function App() {
         </header>
 
         <section>
-          {user ? <ChatRoom /> : <SignIn />}
+          {user ? <ChatRoomList /> : <SignIn />}
         </section>
 
       </div>
@@ -62,9 +62,38 @@ function SignOut() {
   )
 }
 
-function ChatRoom() {
+function ChatRoomList(){
+    const query = firestore.collection('rooms');
+
+    const [rooms] = useCollectionData(query, { idField: 'id' });
+    const [curChatroom, setCurChatroom] = useState('');
+
+    return (<>
+        {curChatroom === '' ?
+            <main>
+                <span className={"notice"}>Pick A Chatroom</span>
+                {rooms && rooms.map(room => <ChatRoomItem key={room.id} name={room.id} changeRoom = {setCurChatroom}/>)}
+            </main>
+            :
+            <ChatRoom room = {curChatroom} changeRoom = {setCurChatroom}/>
+        }
+    </>)
+}
+
+function ChatRoomItem(props){
+    const roomName = props.name;
+    const changeRoom = props.changeRoom;
+    return(<>
+        <button className={"room"} onClick={ ()=>changeRoom(roomName) }><span>{roomName}</span></button>
+    </>)
+}
+
+function ChatRoom(props) {
+    const roomName = props.room;
+    const changeRoom = props.changeRoom;
+
     const dummy = useRef();
-    const messagesRef = firestore.collection('messages');
+    const messagesRef = firestore.collection('rooms' ).doc(props.room).collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
 
     const [messages] = useCollectionData(query, { idField: 'id' });
@@ -90,6 +119,7 @@ function ChatRoom() {
 
     return (<>
         <main>
+            <button id={"back"} onClick={ ()=> changeRoom('')}>Back</button>
 
             {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
 
