@@ -75,7 +75,7 @@ function ChatRoomList(){
                 {rooms && rooms.map(room => <ChatRoomItem key={room.id} name={room.id} changeRoom = {setCurChatroom}/>)}
             </main>
             :
-            <ChatRoom room = {curChatroom} changeRoom = {setCurChatroom}/>
+            <ChatRoom room = {curChatroom} changeRoom = {()=>setCurChatroom('')}/>
         }
     </>)
 }
@@ -93,7 +93,7 @@ function ChatRoom(props) {
     const changeRoom = props.changeRoom;
 
     const dummy = useRef();
-    const messagesRef = firestore.collection('rooms' ).doc(props.room).collection('messages');
+    const messagesRef = firestore.collection('rooms' ).doc(roomName).collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
 
     const [messages] = useCollectionData(query, { idField: 'id' });
@@ -119,7 +119,7 @@ function ChatRoom(props) {
 
     return (<>
         <main>
-            <button id={"back"} onClick={ ()=> changeRoom('')}>Back</button>
+            <button id={"back"} onClick={ ()=> changeRoom()}>Back</button>
 
             {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
 
