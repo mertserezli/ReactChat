@@ -21,14 +21,4 @@ exports.detectEvilUsers = functions.firestore
             await db.collection('banned').doc(uid).set({});
         }
 
-        const userRef = db.collection('users').doc(uid);
-
-        const userData = (await userRef.get()).data();
-
-        if (userData.msgCount >= 7) {
-            await db.collection('banned').doc(uid).set({});
-        } else {
-            await userRef.set({ msgCount: (userData.msgCount || 0) + 1 })
-        }
-
     });
