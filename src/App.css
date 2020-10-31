@@ -54,7 +54,7 @@ main::-webkit-scrollbar-thumb {
   background: #6649b8;
 }
 
-form {
+#sendMessage {
   height: 10vh;
   position: fixed;
   bottom: 0;
@@ -65,7 +65,7 @@ form {
   font-size: 1.5rem;
 }
 
-form button {
+#sendMessage button {
   width: 20%;
   background-color: rgb(56, 56, 143);
 }
@@ -141,18 +141,29 @@ p {
   background: #e5e5ea;
 }
 
-#back{
-  background-color: #247674; /* Green */
-  border: none;
-  color: white;
+#chatRoomName{
   padding: 15px 32px;
+  text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 1.25rem;
-  width: 25%;
-  float: right;
-  align-self: flex-end;
 }
+
+#chatRoomCreate {
+  background-color: rgb(24, 23, 23);
+  width: 100%;
+  max-width: 728px;
+  display: flex;
+  font-size: 1.5rem;
+}
+
+#chatRoomCreate button {
+  border-radius: 80%;
+  width: 10%;
+  background-color: rgb(56, 56, 143);
+  text-align: left;
+}
+
 
 .room span{
   color: black;

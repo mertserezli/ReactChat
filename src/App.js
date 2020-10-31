@@ -67,12 +67,25 @@ function ChatRoomList(){
 
     const [rooms] = useCollectionData(query, { idField: 'id' });
     const [curChatroom, setCurChatroom] = useState('');
+    const [chatRoomValue, setchatRoomValue] = useState('');
+
+    const addRoom = async (e) => {
+        e.preventDefault();
+
+        await query.doc(chatRoomValue).set({});
+
+        setchatRoomValue('');
+    };
 
     return (<>
         {curChatroom === '' ?
             <main>
                 <span className={"notice"}>Pick A Chatroom</span>
                 {rooms && rooms.map(room => <ChatRoomItem key={room.id} name={room.id} changeRoom = {setCurChatroom}/>)}
+                <form id={"chatRoomCreate"}>
+                    <input id="newRoom" onChange={(e) => setchatRoomValue(e.target.value)} placeholder="Create new room"/>
+                    <button type="submit" onClick={addRoom}>➕</button>
+                </form>
             </main>
             :
             <ChatRoom room = {curChatroom} back = {()=>setCurChatroom('')}/>
@@ -118,16 +131,18 @@ function ChatRoom(props) {
     };
 
     return (<>
+        <header>
+            <p id={"chatRoomName"}>{roomName}</p>
+            <button onClick={ ()=> back()}>Back</button>
+        </header>
         <main>
-            <button id={"back"} onClick={ ()=> back()}>Back</button>
-
             {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
 
             <span ref={dummy}/>
 
         </main>
 
-        <form onSubmit={sendMessage}>
+        <form id={"sendMessage"} onSubmit={sendMessage}>
 
             <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
