@@ -28,7 +28,7 @@ function App() {
   return (
       <div className="App">
         <header>
-          <h1>⚛️🔥💬</h1>
+          <h1><span role="img" aria-label="react chat">⚛️🔥💬</span></h1>
           <SignOut />
         </header>
 
@@ -84,7 +84,7 @@ function ChatRoomList(){
                 {rooms && rooms.map(room => <ChatRoomItem key={room.id} name={room.id} changeRoom = {setCurChatroom}/>)}
                 <form id={"chatRoomCreate"}>
                     <input id="newRoom" onChange={(e) => setchatRoomValue(e.target.value)} placeholder="Create new room"/>
-                    <button type="submit" onClick={addRoom}>➕</button>
+                    <button type="submit" onClick={addRoom}><span role="img" aria-label="add">➕</span></button>
                 </form>
             </main>
             :
@@ -146,7 +146,7 @@ function ChatRoom(props) {
 
             <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
-            <button type="submit" disabled={!formValue}>🕊️</button>
+            <button type="submit" disabled={!formValue}><span role="img" aria-label="send">🕊️</span></button>
 
         </form>
     </>)
