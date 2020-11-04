@@ -15,9 +15,10 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@master
       
-      - name: Build
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
           node-version: '12'
       - run: npm install
